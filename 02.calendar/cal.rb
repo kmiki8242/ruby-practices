@@ -22,32 +22,21 @@ else
   year = params[:y].to_i
 end
 
-# 月の初日の曜日を取得
-FirstDayOfTheWeek = Date.new(year, month, 1).wday.to_i
-
-# 月の最終日の日付を取得
-LastDate = Date.new(year, month, -1).day.to_i
-
-# 2日から最終日までの日付(key)と曜日(value)をハッシュにまとめる
-date = 2
-dates = {}
-while date <= LastDate
-  day_of_the_week = Date.new(year, month, date).wday.to_i
-  dates[date] = day_of_the_week
-  date += 1
-end
+first_day = Date.new(year, month, 1)
+last_day =  Date.new(year, month, -1)
 
 # カレンダーの表示
 puts "#{month}月 #{year}".rjust(13)
 puts "日 月 火 水 木 金 土"
-LocationAtFirstDayOfTheWeek = 2 + 3 * FirstDayOfTheWeek
-print "#{1.to_s.rjust(LocationAtFirstDayOfTheWeek)}"
-
-dates.each do |date, day_of_the_week|
-  if day_of_the_week == 0
-    printf("\n%2d", date)
+(first_day..last_day).each do |date|
+  if date == first_day
+    location_at_first_day_of_the_week = 2 + 3 * date.wday
+    print "#{date.day.to_s.rjust(location_at_first_day_of_the_week)}"
+  elsif date.wday == 0
+    print"\n"
+    print "#{date.day}".rjust(2)
   else
-    printf("%3d", date)
+    print"#{date.day}".rjust(3)
   end
 end
 
