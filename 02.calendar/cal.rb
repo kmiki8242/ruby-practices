@@ -9,29 +9,30 @@ opt.on('-m [VAL]') {|v| v }
 opt.on('-y [VAL]') {|v| v }
 opt.parse!(ARGV, into: params)
 
-if params[:m] != nil
-  month = params[:m].to_i
+today = Date.today
+if params[:m] == nil
+  month = today.month
 else
-  month = Date.today.strftime('%m').to_i
+  month = params[:m].to_i
 end
 
-if params[:y] != nil
-  year = params[:y].to_i
+if params[:y] == nil
+  year = today.year
 else
-  year = Date.today.strftime('%Y').to_i
+  year = params[:y].to_i
 end
 
 # 月の初日の曜日を取得
-FirstDayOfTheWeek = Date.new(year, month, 1).strftime('%w').to_i
+FirstDayOfTheWeek = Date.new(year, month, 1).wday.to_i
 
 # 月の最終日の日付を取得
-LastDate = Date.new(year, month, -1).strftime('%e').to_i
+LastDate = Date.new(year, month, -1).day.to_i
 
 # 2日から最終日までの日付(key)と曜日(value)をハッシュにまとめる
 date = 2
 dates = {}
 while date <= LastDate
-  day_of_the_week = Date.new(year, month, date).strftime('%w').to_i
+  day_of_the_week = Date.new(year, month, date).wday.to_i
   dates[date] = day_of_the_week
   date += 1
 end
