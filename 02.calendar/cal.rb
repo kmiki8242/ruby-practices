@@ -49,3 +49,5 @@ dates.each do |date, day_of_the_week|
     printf("%3d", date)
   end
 end
+
+print "\n"
