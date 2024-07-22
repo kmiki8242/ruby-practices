@@ -32,7 +32,7 @@ date_views = []
 # カレンダーの表示
 puts "#{month}月 #{year}".rjust(13)
 puts "日 月 火 水 木 金 土"
-print " ".rjust(location_at_first_day_of_the_week)
+print "\s".rjust(location_at_first_day_of_the_week)
 
 (first_day..last_day).each do |date|
   if date.wday == 6 || date == last_day
