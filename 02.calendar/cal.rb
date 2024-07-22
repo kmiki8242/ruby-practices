@@ -25,19 +25,22 @@ end
 first_day = Date.new(year, month, 1)
 last_day =  Date.new(year, month, -1)
 
+location_at_first_day_of_the_week = 3 * first_day.wday
+
+date_views = []
+
 # カレンダーの表示
 puts "#{month}月 #{year}".rjust(13)
 puts "日 月 火 水 木 金 土"
+print " ".rjust(location_at_first_day_of_the_week)
+
 (first_day..last_day).each do |date|
-  if date == first_day
-    location_at_first_day_of_the_week = 2 + 3 * date.wday
-    print "#{date.day.to_s.rjust(location_at_first_day_of_the_week)}"
-  elsif date.wday == 0
-    print"\n"
-    print "#{date.day}".rjust(2)
+  if date.wday == 6 || date == last_day
+    date_views.push("#{date.day}".rjust(2))
+    print date_views.join("\s")
+    puts
+    date_views = []
   else
-    print"#{date.day}".rjust(3)
+    date_views.push("#{date.day}".rjust(2))
   end
 end
-
-print "\n"
