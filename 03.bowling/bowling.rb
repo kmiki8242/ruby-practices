@@ -26,27 +26,22 @@ def strike?(frame_scores)
   frame_scores[0] == 10
 end
 
-def spare?(frame_scores)
-  frame_scores.sum == 10
-end
-
 point = 0
 
 frames.each do |frame, frame_scores|
   point += frame_scores.sum
 
-  next if frame > 8
+  next if frame > 8 || frame_scores.sum != 10
 
-  if strike?(frame_scores)
-    point += frames[frame + 1][0]
-    point += if frames[frame + 1][0] == 10
-               frames[frame + 2][0]
-             else
-               frames[frame + 1][1]
-             end
-  elsif spare?(frame_scores)
-    point += frames[frame + 1][0]
-  end
+  point += frames[frame + 1][0]
+
+  next unless strike?(frame_scores)
+
+  point += if frames[frame + 1][0] == 10
+             frames[frame + 2][0]
+           else
+             frames[frame + 1][1]
+           end
 end
 
 puts point
