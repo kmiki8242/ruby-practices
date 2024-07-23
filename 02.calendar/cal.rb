@@ -27,20 +27,17 @@ last_day =  Date.new(year, month, -1)
 
 location_at_first_day_of_the_week = 3 * first_day.wday
 
-date_views = []
+dates_in_week = []
 
 # カレンダーの表示
 puts "#{month}月 #{year}".rjust(13)
 puts "日 月 火 水 木 金 土"
-print "\s".rjust(location_at_first_day_of_the_week)
+print "\s" * location_at_first_day_of_the_week
 
 (first_day..last_day).each do |date|
-  if date.wday == 6 || date == last_day
-    date_views.push("#{date.day}".rjust(2))
-    print date_views.join("\s")
-    puts
-    date_views = []
-  else
-    date_views.push("#{date.day}".rjust(2))
+  dates_in_week.push("#{date.day}".rjust(2))
+  if date.saturday? || date == last_day
+    puts dates_in_week.join("\s")
+    dates_in_week = []
   end
 end
