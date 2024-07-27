@@ -28,14 +28,16 @@ all_frame_scores.each_with_index do |frame_scores, idx|
 
   next if idx > 8 || frame_scores.sum != 10
 
-  point += all_frame_scores[idx + 1][0]
+  next_frame_scores = all_frame_scores[idx + 1]
+  point += next_frame_scores[0]
 
   next unless strike?(frame_scores)
 
-  point += if all_frame_scores[idx + 1][0] == 10
-             all_frame_scores[idx + 2][0]
+  next_next_frame_scores = all_frame_scores[idx + 2]
+  point += if strike?(next_frame_scores)
+             next_next_frame_scores[0]
            else
-             all_frame_scores[idx + 1][1]
+             next_frame_scores[1]
            end
 end
 
