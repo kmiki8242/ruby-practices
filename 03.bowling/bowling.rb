@@ -2,6 +2,7 @@
 # frozen_string_literal: true
 
 score = ARGV[0]
+
 scores = score.split(',')
 
 shots = []
@@ -14,13 +15,7 @@ scores.each do |s|
   end
 end
 
-i = 0
-frames = {}
 all_frame_scores = shots.each_slice(2).to_a
-while i < all_frame_scores.length
-  frames[i] = all_frame_scores[i]
-  i += 1
-end
 
 def strike?(frame_scores)
   frame_scores[0] == 10
@@ -28,19 +23,19 @@ end
 
 point = 0
 
-frames.each do |frame, frame_scores|
+all_frame_scores.each_with_index do |frame_scores, idx|
   point += frame_scores.sum
 
-  next if frame > 8 || frame_scores.sum != 10
+  next if idx > 8 || frame_scores.sum != 10
 
-  point += frames[frame + 1][0]
+  point += all_frame_scores[idx + 1][0]
 
   next unless strike?(frame_scores)
 
-  point += if frames[frame + 1][0] == 10
-             frames[frame + 2][0]
+  point += if all_frame_scores[idx + 1][0] == 10
+             all_frame_scores[idx + 2][0]
            else
-             frames[frame + 1][1]
+             all_frame_scores[idx + 1][1]
            end
 end
 
